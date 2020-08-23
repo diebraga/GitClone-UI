@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import GlobalStyles from '../src/styles/GlobalStyles';
 import Header from '../src/components/Header';
 import Profile from '../src/pages/Profile';
 import Repo from '../src/pages/Repo';
@@ -18,6 +19,7 @@ function App() {
       </Routes>
 
     {/*<Footer />*/}
+    <GlobalStyles />
     </BrowserRouter>
   );
 }
