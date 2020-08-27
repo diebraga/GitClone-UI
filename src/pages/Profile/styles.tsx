@@ -22,6 +22,12 @@ export const Main = styled.div`
 `;
 
 export const LeftSide = styled.div`
+  padding-top: 0;
+  padding-bottom: 0;
+
+  padding-left: 16px;
+  padding-right: 16px;
+
   @media (min-width: 768px) {
     width: 25%
   }
@@ -48,5 +54,15 @@ export const Repos = styled.div`
     grid-gap: 16px;
 
     grid-template-columns: 1fr;
+
+    @media (min-width: 760px) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
+`;
+
+export const HeadingCalendar = styled.div`  
+  font-size: 16px;
+  margin: 36px 0 9px;
+  display: inline-flex;
 `;
