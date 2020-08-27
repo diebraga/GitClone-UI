@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Container, Main, LeftSide, RightSide } from './styles';
+import { Container, Main, LeftSide, RightSide, Repos } from './styles';
 import ProfileData from '../../components/ProfileData';
+import RepoCard from '../../components/RepoCard';
 
 const Profile: React.FC = () => {
   return (
@@ -12,15 +13,31 @@ const Profile: React.FC = () => {
             username={'diebraga'}
             name={'Diego Braga'}
             avatarURL={'https://avatars2.githubusercontent.com/u/52054459?s=460&u=d4c512846e9d96d98c2da4eeb1c9906691461b80&v=4'}
-            followers={2134}
-            following={1000}
+            followers={21}
+            following={10}
             company={'Inv Techs'}
             location={'Limerick, Ireland'}
             email={'diebraga0055@gmnail.com'}
             blog={'www.linkedin.com/in/diebraga'}
           />
         </LeftSide>
-        <RightSide></RightSide>
+        <RightSide>
+          <Repos>
+            <h2>Random repos</h2>
+
+              <div>{[1, 2, 3, 4, 5, 6].map(n => (
+                <RepoCard 
+                  key={n}
+                  username={'diebraga'}
+                  reponame={'typescript-node'}
+                  description={'express aplication using typescript'}
+                  language={n % 3 === 0 ? 'Typescript' : 'Javasript'}
+                  stars={3}
+                  forks={1}
+                />
+              ))}</div>
+          </Repos>
+        </RightSide>
       </Main>
     </Container>
   )
