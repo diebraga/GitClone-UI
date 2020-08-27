@@ -31,7 +31,7 @@ const Profile: React.FC = () => {
                   username={'diebraga'}
                   reponame={'typescript-node'}
                   description={'express aplication using typescript'}
-                  language={n % 3 === 0 ? 'Typescript' : 'Javasript'}
+                  language={n % 3 === 0 ? 'Typescript' : 'Javascript'}
                   stars={3}
                   forks={1}
                 />
