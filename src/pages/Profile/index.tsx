@@ -1,12 +1,19 @@
 import React from 'react';
 
-import { Container, Main, LeftSide, RightSide, Repos, HeadingCalendar } from './styles';
+import { Container, Main, LeftSide, RightSide, Repos, HeadingCalendar, RepoIcon, Tab } from './styles';
 import ProfileData from '../../components/ProfileData';
 import RepoCard from '../../components/RepoCard';
 import RandomCalendar from '../../components/RandomCalendar';
 
 
 const Profile: React.FC = () => {
+  const TabContent = () => (
+    <div className="content">
+      <RepoIcon />
+      <span className="label">Repositories</span>
+      <span className="number">30</span>
+    </div>
+  );
   return (
     <Container>
       <Main>
@@ -23,7 +30,12 @@ const Profile: React.FC = () => {
             blog={'www.linkedin.com/in/diebraga'}
           />
         </LeftSide>
+
         <RightSide>
+          <Tab className="mobile">
+            <TabContent />
+            <span className="line"></span>
+          </Tab>
           <Repos>
             <h2>Random repos</h2>
 
