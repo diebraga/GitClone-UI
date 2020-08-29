@@ -16,6 +16,15 @@ const Profile: React.FC = () => {
   );
   return (
     <Container>
+      <Tab className="desktop">
+        <div className="wrapper">
+          <span className="offset" />
+        <TabContent />
+
+        </div>
+
+        <span className="line" />
+      </Tab>
       <Main>
         <LeftSide>
           <ProfileData 
