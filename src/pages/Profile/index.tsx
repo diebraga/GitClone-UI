@@ -1,74 +1,123 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
 
 import { Container, Main, LeftSide, RightSide, Repos, HeadingCalendar, RepoIcon, Tab } from './styles';
 import ProfileData from '../../components/ProfileData';
 import RepoCard from '../../components/RepoCard';
 import RandomCalendar from '../../components/RandomCalendar';
 
+import { APIUser, APIRepo } from '../../@types/index';
+
+interface Data {
+  user?: APIUser;
+  repos?: APIRepo[];
+  error?: string;
+}
 
 const Profile: React.FC = () => {
+  const { username = 'diebraga' } = useParams();
+  const [data, setData] = useState<Data>();
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`https://api.github.com/users/${username}`),
+      fetch(`https://api.github.com/users/${username}/repos`),
+    ]).then(async (responses) => {
+      const [userResponse, reposResponse] = responses;
+
+      if (userResponse.status === 404) {
+        setData({ error: 'User not found!' });
+        return;
+      }
+
+      const user = await userResponse.json();
+      const repos = await reposResponse.json();
+
+      const shuffledRepos = repos.sort(() => 0.5 - Math.random());
+      const slicedRepos = shuffledRepos.slice(0, 6); // 6 repos
+
+      setData({
+        user,
+        repos: slicedRepos,
+      });
+    });
+  }, [username]);
+
+  if (data?.error) {
+    return <h1>{data.error}</h1>;
+  }
+
+  if (!data?.user || !data?.repos) {
+    return <h1>Loading...</h1>;
+  }
+
   const TabContent = () => (
     <div className="content">
       <RepoIcon />
       <span className="label">Repositories</span>
-      <span className="number">30</span>
+      <span className="number">{data.user?.public_repos}</span>
     </div>
   );
+
   return (
     <Container>
       <Tab className="desktop">
         <div className="wrapper">
           <span className="offset" />
-        <TabContent />
-
+          <TabContent />
         </div>
 
         <span className="line" />
       </Tab>
+
       <Main>
         <LeftSide>
-          <ProfileData 
-            username={'diebraga'}
-            name={'Diego Braga'}
-            avatarURL={'https://avatars2.githubusercontent.com/u/52054459?s=460&u=d4c512846e9d96d98c2da4eeb1c9906691461b80&v=4'}
-            followers={21}
-            following={10}
-            company={'Inv Techs'}
-            location={'Limerick, Ireland'}
-            email={'diebraga0055@gmnail.com'}
-            blog={'www.linkedin.com/in/diebraga'}
+          <ProfileData
+            username={data.user.login}
+            name={data.user.name}
+            avatarURL={data.user.avatar_url}
+            followers={data.user.followers}
+            following={data.user.following}
+            company={data.user.company}
+            location={data.user.location}
+            email={data.user.email}
+            blog={data.user.blog}
           />
         </LeftSide>
 
         <RightSide>
           <Tab className="mobile">
             <TabContent />
-            <span className="line"></span>
+            <span className="line" />
           </Tab>
+
           <Repos>
             <h2>Random repos</h2>
 
-              <div>{[1, 2, 3, 4, 5, 6].map(n => (
-                <RepoCard 
-                  key={n}
-                  username={'diebraga'}
-                  reponame={'typescript-node'}
-                  description={'express aplication using typescript'}
-                  language={n % 3 === 0 ? 'Javascript' : 'Typescript'}
-                  stars={3}
-                  forks={1}
+            <div>
+              {data.repos.map((item) => (
+                <RepoCard
+                  key={item.name}
+                  username={item.owner.login}
+                  reponame={item.name}
+                  description={item.description}
+                  language={item.language}
+                  stars={item.stargazers_count}
+                  forks={item.forks}
                 />
-              ))}</div>
+              ))}
+            </div>
           </Repos>
+
           <HeadingCalendar>
-            Random Calendar (Doesn't represent actual data)
+            Random calendar (do not represent actual data)
           </HeadingCalendar>
 
           <RandomCalendar />
         </RightSide>
       </Main>
     </Container>
-  )
-}
+  );
+};
 
 export default Profile;
