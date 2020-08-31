@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyles from '../src/styles/GlobalStyles';
 import Header from '../src/components/Header';
 import Profile from '../src/pages/Profile';
+import Footer from '../src/components/Footer';
 import Repo from '../src/pages/Repo';
 
 
@@ -20,7 +21,7 @@ function App() {
         <Route path="/:username/:reponame" element={<Repo />}/>
       </Routes>
 
-    {/*<Footer />*/}
+    <Footer />
     <GlobalStyles />
     </BrowserRouter>
   );
