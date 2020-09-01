@@ -44,7 +44,15 @@ export const BotSide = styled.div`
     }
 
     &.typescript {
-      background: var(--typescript)
+      background: var(--typescript);
+    }
+
+    &.python {
+      background: #3572A5;
+    }
+
+    &.HTML {
+      background: #E34C26;
     }
 
   }
